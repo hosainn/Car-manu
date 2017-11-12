@@ -1,0 +1,26 @@
+Thougth Process:
+        First of all user add their car model and add it's parts with its ,parts name ,parts number ,level number .
+        like in the example table Model A-2017 has a parts that name "Door Auto1" thats level number is 1 and parts number is 1.
+        In the same model car Parts name "Auto Lock"  thats parts number 2 and level number 3.
+        
+        I use two database table for store CarModel and it's parts.
+        Then i convert  CarModels and parts in a array datastructure
+        For table show i use the array to table 
+        and for graph show i use this array for convert graph datastructure
+        Finally i use HTML <canvas> for relation with line of every parts of car
+ 
+ I choose this design because from array data structure  it is easy for expecting output.
+ 
+ Programming Language:
+             1.Django(python)
+             2.javascript
+ libraries:
+          1. pandas
+          2. numpy
+
+
+
+ 
+ 
+        
+        
