@@ -1,0 +1,4 @@
+django
+python 3
+pandas
+numpy
