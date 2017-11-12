@@ -1,0 +1,33 @@
+
+
+ {% extends parent_template|default:"cars/base_cars.html" %}
+
+
+
+
+{% block title %}
+                   Company
+{% endblock %}
+
+ {% block heading %}
+ <h1>Car Manufacturing Company</h1>
+ <a href="{% url 'table_view' %}" class="button button-primary">Show table</a>
+ <a href="{% url 'graph_view' %}" class="button button-primary">show graph</a>
+ {% endblock %}
+
+{% block content %}
+
+    <br><br><br>
+ <button><a href="{% url 'car_model_create' %}" class="button-primary">Add Car Model</a></button>
+    <br><br>
+ <button><a href="{% url 'car_parts_create' %}" class="button-primary">Add Car parts</a></button>
+
+
+
+{% endblock %}
+
+
+
+
+
+

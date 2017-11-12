@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <title>
+        {% block title %}
+           Table
+        {% endblock %}
+    </title>
+
+    <!--Blog post style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'cars/blog_style.css' %}">
+    <!--Form and button style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'cars/style.css' %}">
+    <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table{
+   width:70%;
+}
+</style>
+
+</head>
+<body>
+<h1>Table View of Cars Model and it's parts</h1>
+<a href="{% url 'graph_view' %}" class="button button-primary">Show graph</a>
+<a href="{% url 'homepage_list' %}" class="button button-primary">Home</a>
+<br>
+<br>
+     {{html|safe}}
+
+</body>
+</html>

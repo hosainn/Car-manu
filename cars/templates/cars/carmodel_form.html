@@ -1,0 +1,33 @@
+
+
+ {% extends parent_template|default:"cars/base_cars.html" %}
+
+
+
+
+{% block title %}
+                   Car Model
+{% endblock %}
+
+ {% block heading %}
+ <h2>Car  Model Create</h2>
+ {% endblock %}
+
+{% block content %}
+
+  <form action="{% url 'car_model_create' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button-primary" type="submit">Add Carmodel</button>
+  </form>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="3000" height="2000"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#FF0000";
+var i,j,x,y;
+var a = new Array(50);
+
+for(var i=0;i<50;i++){
+   a[i]= new Array(50);
+}
+
+var x;
+var y;
+var t = false;
+a[0][0]="Model A-2017";
+a[0][1]="Door Auto1";
+a[0][2]="Automatic Window System";
+a[0][3]="Glass Type-1A";
+a[1][3]="Glass opener button";
+a[1][4]="Wiring";
+a[2][2]="Auto Lock";
+a[2][3]="Lock Button";
+a[2][4]="Wiring";
+a[3][1]="Head light-Front-left";
+a[3][2]="Wiring";
+a[5][0]="Model A-2016";
+a[5][1]="Door Manu1";
+a[5][2]="Manual Window System";
+a[5][3]="Glass Type-2C";
+a[6][3]="Window roller";
+a[7][1]="Head light-Front-left";
+a[7][2]="Wiring";
+a[8][1]="Near View mirror";
+
+function Node(i,j,name){
+        x=(j*120)+(j*10)+10;
+        y=(i*120)+(i*10)+10;
+        ctx.fillStyle = "#FF0000";
+        ctx.fillRect(x,y,100,40);
+        ctx.fillStyle = "blue";
+        ctx.fillText(a[i][j],x+10,y+20);
+
+   }
+
+var dict=[];
+function search(name){
+     var i;
+     var k;
+     for(i=0;i<dict.length;i++){
+         if(dict[i].name==name)
+               k=dict[i];
+     }
+   return k;
+
+}
+
+
+function line(i1,j1,i2,j2){
+
+         var x1=(j1*120)+(j1*10)+10;
+         var y1=(i1*120)+(i1*10)+10;
+          if(j1<j2){
+         var x2=(j2*120)+(j2*10)+10-100;
+         }
+         else{
+         var x2=(j2*120)+(j2*10)+10;
+         }
+         var y2=(i2*120)+(i2*10)+10;
+
+
+         if(j1<j2){
+         var m1=x1+100;
+         }
+         else{
+         var m1=x1;
+         }
+         var m2=y1+20;
+         var m3=x2+100;
+         var m4=y2+20;
+         ctx.moveTo(m1,m2);
+         ctx.lineTo(m3,m4);
+         ctx.stroke();
+
+}
+
+var car,car_i,car_j;
+
+
+
+for(i=0;i<10;i++){
+   for(j=0;j<10;j++){
+       if(a[i][j]){
+             var is_car=true;
+
+             if(j==0&&a[i][j]){
+                car=a[i][j];
+                car_i=i;
+                car_j=j;
+                Node(i,j,a[i][j]);
+                is_car = false;
+             }
+
+
+             var i1 = i;
+             var j1 = j;
+
+
+             if(is_car){
+                 if(!search(a[i][j])){
+                        var obj = {
+                             name :a[i][j],
+                             i    :i,
+                             j    :j
+                        };
+                        dict.push(obj);
+                        Node(i,j,a[i][j]);
+
+
+                 }
+
+
+                 else if(search(a[i][j])){
+                         var ob = search(a[i][j]);
+                         i1 = ob.i;
+                         j1 = ob.j;
+
+                 }
+
+                 var ip = i;
+                 var jp = j;
+                 var T = true;
+
+                 while(T){
+                     if(a[ip][jp-1]){
+                              if(search(a[ip][jp-1])){
+                                   var objc = search(a[ip][jp-1]);
+                                   var i2=objc.i;
+                                   var j2=objc.j;
+                                   line(i1,j1,i2,j2);
+                                   T = false;
+
+                              }
+
+                             else{
+                                 line(ip,jp-1,i1,j1);
+                                 T = false;
+                             }
+                    }
+
+                  else {
+                   if(ip>0){
+                    ip = ip-1;
+                    if(!a[ip][jp]){
+                       line(car_i,car_j,i1,j1)
+                       T = false;
+                    }
+                  }
+                  }
+
+
+                }
+            }
+
+
+
+       }
+    }
+}
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
+

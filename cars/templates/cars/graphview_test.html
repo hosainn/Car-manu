@@ -1,0 +1,196 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <title>
+        {% block title %}
+            Graph
+        {% endblock %}
+    </title>
+
+    <!--Blog post style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'cars/blog_style.css' %}">
+    <!--Form and button style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'cars/style.css' %}">
+</head>
+<body>
+<h1>Graph View of Cars Model and it's parts</h1>
+<a href="{% url 'table_view' %}" class="button button-primary">Show table</a>
+<a href="{% url 'homepage_list' %}" class="button button-primary">Home</a>
+<br>
+<br>
+<canvas id="myCanvas" width="3000" height="2000"
+style="border:1px solid #c3c3c3;">
+Your browser does not support the canvas element.
+</canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "#FF0000";
+var i,j,x,y;
+
+a = {{a|safe}}
+var x;
+var y;
+var t = false;
+
+
+
+
+
+function Node(i,j,name){
+        x=(j*120)+(j*10)+10;
+        y=(i*120)+(i*10)+10;
+        ctx.fillStyle = "#CED8F6";
+        ctx.fillRect(x,y,100,40);
+        ctx.fillStyle = "blue";
+        ctx.fillText(a[i][j],x+10,y+20);
+
+   }
+
+var dict=[];
+function search(name){
+     var i;
+     var k;
+     for(i=0;i<dict.length;i++){
+         if(dict[i].name==name)
+               k=dict[i];
+     }
+   return k;
+
+}
+
+
+function line(i1,j1,i2,j2){
+
+         var x1=(j1*120)+(j1*10)+10;
+         var y1=(i1*120)+(i1*10)+10;
+          if(j1<j2){
+         var x2=(j2*120)+(j2*10)+10-100;
+         }
+         else{
+         var x2=(j2*120)+(j2*10)+10;
+         }
+         var y2=(i2*120)+(i2*10)+10;
+
+
+         if(j1<j2){
+         var m1=x1+100;
+         }
+         else{
+         var m1=x1;
+         }
+         var m2=y1+20;
+         var m3=x2+100;
+         var m4=y2+20;
+         ctx.moveTo(m1,m2);
+         ctx.lineTo(m3,m4);
+         ctx.stroke();
+
+}
+
+var car,car_i,car_j;
+
+
+
+for(i=0;i<50;i++){
+   for(j=0;j<50;j++){
+       if(a[i][j]){
+             var is_car=true;
+
+             if(j==0&&a[i][j]){
+                car=a[i][j];
+                car_i=i;
+                car_j=j;
+                Node(i,j,a[i][j]);
+                is_car = false;
+             }
+
+
+             var i1 = i;
+             var j1 = j;
+
+
+             if(is_car){
+                 if(!search(a[i][j])){
+                        var obj = {
+                             name :a[i][j],
+                             i    :i,
+                             j    :j
+                        };
+                        dict.push(obj);
+                        Node(i,j,a[i][j]);
+
+
+                 }
+
+
+                 else if(search(a[i][j])){
+                         var ob = search(a[i][j]);
+                         i1 = ob.i;
+                         j1 = ob.j;
+
+                 }
+
+                 var ip = i;
+                 var jp = j;
+                 var T = true;
+
+                 while(T){
+                     if(a[ip][jp-1]){
+                              if(search(a[ip][jp-1])){
+                                   var objc = search(a[ip][jp-1]);
+                                   var i2=objc.i;
+                                   var j2=objc.j;
+                                   line(i1,j1,i2,j2);
+                                   T = false;
+
+                              }
+
+                             else{
+                                 line(ip,jp-1,i1,j1);
+                                 T = false;
+                             }
+                    }
+
+                  else {
+                   if(ip>0){
+                    ip = ip-1;
+                    if(!a[ip][jp]){
+                       line(car_i,car_j,i1,j1)
+                       T = false;
+                    }
+                  }
+                  }
+
+
+                }
+            }
+
+
+
+       }
+    }
+}
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
+
